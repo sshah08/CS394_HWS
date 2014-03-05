@@ -21,6 +21,9 @@
 		EDE201BC18C2A8D900B130CC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE2019E18C2A8D900B130CC /* UIKit.framework */; };
 		EDE201C418C2A8D900B130CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDE201C218C2A8D900B130CC /* InfoPlist.strings */; };
 		EDE201C618C2A8D900B130CC /* BlackjackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE201C518C2A8D900B130CC /* BlackjackTests.m */; };
+		EDE201D118C2A8EB00B130CC /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE201D018C2A8EB00B130CC /* Card.m */; };
+		EDE201D418C2A93300B130CC /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE201D318C2A93300B130CC /* Deck.m */; };
+		EDE201D718C2A96900B130CC /* Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE201D618C2A96900B130CC /* Hand.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,12 @@
 		EDE201C118C2A8D900B130CC /* BlackjackTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BlackjackTests-Info.plist"; sourceTree = "<group>"; };
 		EDE201C318C2A8D900B130CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDE201C518C2A8D900B130CC /* BlackjackTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlackjackTests.m; sourceTree = "<group>"; };
+		EDE201CF18C2A8EB00B130CC /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
+		EDE201D018C2A8EB00B130CC /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
+		EDE201D218C2A93300B130CC /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deck.h; sourceTree = "<group>"; };
+		EDE201D318C2A93300B130CC /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deck.m; sourceTree = "<group>"; };
+		EDE201D518C2A96900B130CC /* Hand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hand.h; sourceTree = "<group>"; };
+		EDE201D618C2A96900B130CC /* Hand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hand.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +121,7 @@
 		EDE201A018C2A8D900B130CC /* Blackjack */ = {
 			isa = PBXGroup;
 			children = (
+				EDE201A618C2A8D900B130CC /* main.m */,
 				EDE201A918C2A8D900B130CC /* AppDelegate.h */,
 				EDE201AA18C2A8D900B130CC /* AppDelegate.m */,
 				EDE201AC18C2A8D900B130CC /* Main.storyboard */,
@@ -119,6 +129,12 @@
 				EDE201B018C2A8D900B130CC /* ViewController.m */,
 				EDE201B218C2A8D900B130CC /* Images.xcassets */,
 				EDE201A118C2A8D900B130CC /* Supporting Files */,
+				EDE201CF18C2A8EB00B130CC /* Card.h */,
+				EDE201D018C2A8EB00B130CC /* Card.m */,
+				EDE201D218C2A93300B130CC /* Deck.h */,
+				EDE201D318C2A93300B130CC /* Deck.m */,
+				EDE201D518C2A96900B130CC /* Hand.h */,
+				EDE201D618C2A96900B130CC /* Hand.m */,
 			);
 			path = Blackjack;
 			sourceTree = "<group>";
@@ -128,7 +144,6 @@
 			children = (
 				EDE201A218C2A8D900B130CC /* Blackjack-Info.plist */,
 				EDE201A318C2A8D900B130CC /* InfoPlist.strings */,
-				EDE201A618C2A8D900B130CC /* main.m */,
 				EDE201A818C2A8D900B130CC /* Blackjack-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -249,9 +264,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE201D718C2A96900B130CC /* Hand.m in Sources */,
+				EDE201D418C2A93300B130CC /* Deck.m in Sources */,
 				EDE201B118C2A8D900B130CC /* ViewController.m in Sources */,
 				EDE201AB18C2A8D900B130CC /* AppDelegate.m in Sources */,
 				EDE201A718C2A8D900B130CC /* main.m in Sources */,
+				EDE201D118C2A8EB00B130CC /* Card.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

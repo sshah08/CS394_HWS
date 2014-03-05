@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Deck.h"
+#import "Hand.h"
 @interface ViewController : UIViewController
-
+@property(nonatomic) Deck * deck;
+@property(nonatomic) Hand* me;
+@property(nonatomic) Hand* dealer;
 @end
