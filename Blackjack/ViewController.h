@@ -13,4 +13,6 @@
 @property(nonatomic) Deck * deck;
 @property(nonatomic) Hand* me;
 @property(nonatomic) Hand* dealer;
+@property(nonatomic) int bet;
+@property(nonatomic) int numOfGamesPlayed;
 @end

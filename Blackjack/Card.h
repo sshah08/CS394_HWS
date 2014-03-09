@@ -13,7 +13,6 @@
 @property(nonatomic) NSString* suit;
 @property(nonatomic) NSString* faceName;
 
--(int) getPoint;
 -(id)init: (NSString*) s
 suitValue: (int) val
  faceName: (NSString*) face;

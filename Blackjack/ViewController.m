@@ -11,157 +11,157 @@
 #import "Deck.h"
 #import "Hand.h"
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *displayCurrentCards;
-@property (weak, nonatomic) IBOutlet UILabel *displayFaceName;
-@property (weak, nonatomic) IBOutlet UILabel *displayCardValue;
-@property (weak, nonatomic) IBOutlet UILabel *card2Suit;
-@property (weak, nonatomic) IBOutlet UILabel *card2FaceName;
-@property (weak, nonatomic) IBOutlet UILabel *card2Value;
-@property (weak, nonatomic) IBOutlet UILabel *dealerSuit;
-@property (weak, nonatomic) IBOutlet UILabel *dealerFaceName;
-@property (weak, nonatomic) IBOutlet UILabel *dealer2Suit;
-@property (weak, nonatomic) IBOutlet UILabel *dealer2FaceName;
-@property (weak, nonatomic) IBOutlet UILabel *dealer2Value;
-@property (weak, nonatomic) IBOutlet UILabel *dealerValue;
-@property (weak, nonatomic) IBOutlet UILabel *totalPoints;
-@property (weak, nonatomic) IBOutlet UILabel *card3Suit;
-@property (weak, nonatomic) IBOutlet UILabel *card3FaceName;
-@property (weak, nonatomic) IBOutlet UILabel *card3Value;
-@property (weak, nonatomic) IBOutlet UILabel *dealer3Suit;
-@property (weak, nonatomic) IBOutlet UILabel *dealer3FaceName;
-@property (weak, nonatomic) IBOutlet UILabel *dealer3Value;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *hitButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *standButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *betButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *startGame;
+
+@property (weak, nonatomic) IBOutlet UISlider *betSlider;
+
+
+@property (weak, nonatomic) IBOutlet UITextView *playerField;
+@property (weak, nonatomic) IBOutlet UITextView *dealerField;
+@property (weak, nonatomic) IBOutlet UILabel *playerPoints;
+@property (weak, nonatomic) IBOutlet UILabel *dealerPoints;
+@property (weak, nonatomic) IBOutlet UILabel *playerMoneyLeft;
+@property (weak, nonatomic) IBOutlet UILabel *betMoney;
+@property (weak, nonatomic) IBOutlet UILabel *statusOfGame;
+
+
 
 @end
 
 @implementation ViewController
-
-
-
-
-- (IBAction)hitCard:(id)sender {
+- (IBAction)betSliderValue:(id)sender {
+    //display sliderValue from slider...
+    int valueOfSlider = self.betSlider.value;
+    NSString* convertValueOfSlider = [NSString stringWithFormat:@"%i", valueOfSlider];
+    [self.betMoney setText:convertValueOfSlider];
+}
+- (IBAction)hitMe:(id)sender {
     [_me drawCards:_deck];
-    [_dealer drawCards:_deck];
-    Card* cardTemp;
-    //Card* dealerTemp;
-    NSString* total = [[self totalPoints]text];
-    int totVal = total.intValue;
-    NSArray* temp = [_me displayCardsForSimulator];
-    //NSArray* temp1 = [_dealer displayCardsForSimulator];
-    int c3val;
-    NSString *cardSuit, *cardFaceName;
-    
-    if (totVal > 21) {
-        [self.totalPoints setText:@"BUSTED!"];
-        
+    [self.playerField setText:[[_me cardsConcat ] componentsJoinedByString:@"\n"]];
+    [self.playerPoints setText:([NSString stringWithFormat:@"%d", [_me getTotal]])];
+    //losing and wining conditions after hit me....enable and disable buttons based on conditions so users cant access buttons
+    if ([_me getTotal] > 21) {
+        [self.statusOfGame setText: @"BUSTED!"];
+        [self.hitButton setEnabled:NO];
+        [self.startGame setEnabled:YES];
+        [self.standButton setEnabled:NO];
+        int valueofSlider = self.betSlider.value;
+        _bet = _bet - valueofSlider;
+        [self.playerMoneyLeft setText: ([NSString stringWithFormat:@"$%i", _bet])];
     }
+    if ([_me getTotal] == 21) {
+        [self.statusOfGame setText:@"You Won!"];
+        [self.hitButton setEnabled:NO];
+        [self.startGame setEnabled:YES];
+        [self.standButton setEnabled:NO];
+        int valueofSlider = self.betSlider.value;
+        _bet = _bet + valueofSlider;
+        [self.playerMoneyLeft setText: ([NSString stringWithFormat:@"$%i", _bet])];
+    }
+    [self.betButton setEnabled:NO];
+}
+- (IBAction)stand:(id)sender {
+    [self.startGame setEnabled:YES];
+    [self.hitButton setEnabled:NO];
+    [self.betButton setEnabled:NO];
+    [self.standButton setEnabled:NO];
+    [self.dealerField setText:[[_dealer cardsConcat ] componentsJoinedByString:@"\n"]];
+    [self.dealerPoints setText:([NSString stringWithFormat:@"%d", [_dealer getTotal]])];
+    //conditions of wining and losing!!
+    while ([_dealer getTotal] < 17) {
+        [_dealer drawCards:_deck];
+        [self.dealerField setText:[[_dealer cardsConcat ] componentsJoinedByString:@"\n"]];
+        [self.dealerPoints setText:([NSString stringWithFormat:@"%d", [_dealer getTotal]])];
+    }
+    if ([_dealer getTotal] > 21) {
+        [self.statusOfGame setText:@"Dealer Busted! You WON!"];
+        int valueofSlider = self.betSlider.value;
+        _bet = _bet + valueofSlider;
+        [self.playerMoneyLeft setText: ([NSString stringWithFormat:@"$%i", _bet])];
+    }
+    else if ([_me getTotal] > [_dealer getTotal]) {
+        [self.statusOfGame setText:@"You WON!"];
+        int valueofSlider = self.betSlider.value;
+        _bet = _bet + valueofSlider;
+        [self.playerMoneyLeft setText: ([NSString stringWithFormat:@"$%i", _bet])];
+    }
+    else if([_me getTotal] < [_dealer getTotal]) {
+        [self.statusOfGame setText:@"Dealer WON!"];
+        int valueofSlider = self.betSlider.value;
+        _bet = _bet - valueofSlider;
+        [self.playerMoneyLeft setText: ([NSString stringWithFormat:@"$%i", _bet])];
+    }
+    //if points equal then obviously tied so bet money isnt added or subtracted from total money
     else {
-        [_me drawCards:_deck];
-        cardTemp = [temp objectAtIndex:2];
-        c3val = cardTemp.cardValue;
-        totVal = c3val + totVal;
-        cardSuit= cardTemp.suit;
-        cardFaceName = cardTemp.faceName;
-        NSString* cardValueString = [NSString stringWithFormat:@"%i", cardTemp.cardValue];
-        NSString* totalString = [NSString stringWithFormat:@"%i", totVal];
-        [self.card3Suit setText:cardSuit];
-        [self.card3FaceName setText:cardFaceName];
-        [self.card3Value setText:cardValueString];
-        if (totVal > 21) {
-            [self.totalPoints setText:@"BUSTED!"];
-        }
-        else {
-            [self.totalPoints setText:totalString];
-            c3val = 0;
-        }
-        
+        [self.statusOfGame setText:@"Hand Tied!"];
     }
     
-    
-    
-    
-        
-    
+}
+- (IBAction)bet:(id)sender {
+    [self.betSlider setEnabled:YES];
+    [self.statusOfGame setText:Nil];
+    [self.hitButton setEnabled:YES];
+    [self.standButton setEnabled:YES];
     
 }
 
-- (IBAction)newGame:(id)sender {
-    //reset buttons for new game
-    [self.displayCurrentCards setText:@" "];
-    [self.displayFaceName setText:@" "];
-    [self.displayCardValue setText:@" "];
-    [self.card2Suit setText:@" "];
-    [self.card2FaceName setText:@" "];
-    [self.card2Value setText:@" "];
-    [self.totalPoints setText:@" "];
-    [self.dealerSuit setText:@" "];
-    [self.dealerFaceName setText:@" "];
-    [self.dealerValue setText:@" "];
-    [self.dealer2Suit setText:@" "];
-    [self.dealer2FaceName setText:@" "];
-    [self.dealer2Value setText:@" "];
-    [self.card3Suit setText:@" "];
-    [self.card3FaceName setText:@" "];
-    [self.card3Value setText:@" "];
-    [self.dealer3Suit setText:@" "];
-    [self.dealer3FaceName setText:@" "];
-    [self.dealer3Value setText:@" "];
-
-    Card* cardTemp;
-    Card* cardTemp2;
-
-    NSArray* dealerTemp = [[NSArray alloc]init];
-    dealerTemp= [_dealer displayCardsForSimulator];
-    NSArray* temp = [_me displayCardsForSimulator];
-    NSString *cardSuit, *cardFaceName;
-    //int c1val, c2val,totVal;
-    cardTemp = [temp objectAtIndex:0];
-    cardSuit= cardTemp.suit;
-    cardFaceName = cardTemp.faceName;
-    //c1val = cardTemp.cardValue;
-    int c1val = [_me getTotal];
-    NSString* cardValueString = [NSString stringWithFormat:@"%i", cardTemp.cardValue];
-    [self.displayCurrentCards setText:cardSuit];
-    [self.displayFaceName setText:cardFaceName];
-    [self.displayCardValue setText:cardValueString];
-    cardTemp2 = [temp objectAtIndex:1];
-    cardSuit= cardTemp2.suit;
-    cardFaceName = cardTemp2.faceName;
-    //c2val = cardTemp2.cardValue;
-    //totVal = c1val + c2val;
-    NSString* totValueStr = [NSString stringWithFormat:@"%i", c1val];
-    NSString* cardValueString2 = [NSString stringWithFormat:@"%i", cardTemp2.cardValue];
-    [self.card2Suit setText:cardSuit];
-    [self.card2FaceName setText:cardFaceName];
-    [self.card2Value setText:cardValueString2];
-    [self.totalPoints setText:totValueStr];
+- (IBAction)startGame:(id)sender {
+    [self.statusOfGame setText:@"Press Bet and use Slider"];
+    _betSlider.maximumValue = _bet;
+    //shuffle deck after 5 games and set it to 0 again
+    _numOfGamesPlayed = _numOfGamesPlayed + 1;
+    if (_numOfGamesPlayed > 5) {
+        [_deck shuffle];
+        _numOfGamesPlayed = 0;
+    }
     
-    
-    //dealer
-    cardTemp = [dealerTemp objectAtIndex:0];
-    cardSuit= cardTemp.suit;
-    cardFaceName = cardTemp.faceName;
-    NSString* cardValueString3 = [NSString stringWithFormat:@"%i", cardTemp.cardValue];
-    [self.dealerSuit setText:cardSuit];
-    [self.dealerFaceName setText:cardFaceName];
-    [self.dealerValue setText:cardValueString3];
-    cardTemp2 = [dealerTemp objectAtIndex:1];
-    cardSuit= cardTemp2.suit;
-    cardFaceName = cardTemp2.faceName;
-    NSString* cardValueString4 = [NSString stringWithFormat:@"%i", cardTemp2.cardValue];
-    [self.dealer2Suit setText:cardSuit];
-    [self.dealer2FaceName setText:cardFaceName];
-    [self.dealer2Value setText:cardValueString4];
+    //clear inputted random text for testing purposes
+    [self.playerField setText:Nil];
+    [self.dealerField
+     setText:Nil];
+    [self.playerPoints setText:Nil];
+    [self.dealerPoints setText:Nil];
+    [self.betMoney setText:Nil];
+    [self.betButton setEnabled:YES];
 
+    [_me resetHands];
+    [_me drawCards:_deck];
+    [_me drawCards:_deck];
     
+    [self.playerField setText:[[_me cardsConcat ] componentsJoinedByString:@"\n"]];
+    [self.playerPoints setText:([NSString stringWithFormat:@"%d", [_me getTotal]])];
+    [_dealer resetHands];
+    [_dealer drawCards:_deck];
+    [_dealer drawCards:_deck];
+    [self.dealerField setText:[NSString stringWithFormat:@"%@ \n FaceDown 2nd Card", [[_dealer cardsConcat]objectAtIndex:0]]];
+    
+    [self.startGame setEnabled:NO];
 }
+
+
 
 
 - (void)viewDidLoad
 {
+    //initializes everything when first starting app
     [super viewDidLoad];
     _deck = [[Deck alloc]init];
     _me = [[Hand alloc]init:_deck];
     _dealer = [[Hand alloc]init:_deck];
+    _betSlider.minimumValue = 1;
+    _betSlider.maximumValue = 100;
+    _bet = 100;
+    _numOfGamesPlayed = 0;
+    [self.hitButton setEnabled:NO];
+    [self.standButton setEnabled:NO];
+    [self.betButton setEnabled:NO];
+    [self.playerMoneyLeft setText:([NSString stringWithFormat:@"$%i", _bet])];
+    
+    
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

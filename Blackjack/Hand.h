@@ -10,12 +10,13 @@
 #import "Card.h"
 #import "Deck.h"
 @interface Hand : NSObject {
+    
 }
-@property(nonatomic) NSMutableArray * cards;
+@property(nonatomic) NSMutableArray * cardsDrawn;
 -(id)init: (Deck*) deck;
 -(void) drawCards:(Deck*) deck;
 -(int) getTotal;
--(NSArray*) displayCardsForSimulator;
--(void) displayCards;
+-(NSMutableArray*) cardsConcat;
+-(void) resetHands;
 
 @end

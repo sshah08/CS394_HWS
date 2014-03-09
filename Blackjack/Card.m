@@ -9,7 +9,7 @@
 #import "Card.h"
 
 @implementation Card
-
+//initialize Card object with suit, faceName, and card value
 -(id)init: (NSString*) s
 suitValue: (int) val
  faceName: (NSString*) face {
@@ -24,8 +24,5 @@ suitValue: (int) val
     
 }
 
--(int) getPoint {
-    return _cardValue;
-}
 
 @end

@@ -10,7 +10,9 @@
 #import "Card.h"
 @interface Deck : NSObject
 @property(nonatomic) NSMutableArray * cards;
+@property (nonatomic) NSMutableArray* cardsDrawn;
 -(id)init;
 -(id)drawFromDeck;
+-(void) shuffle;
 
 @end

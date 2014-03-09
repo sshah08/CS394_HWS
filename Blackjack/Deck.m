@@ -12,7 +12,7 @@
 -(id) init {
     self = [super init];
     _cards = [[NSMutableArray alloc]init];
-    
+    //initialize all the cards with name, facevalue, suit
     //Spades
     //Ace is given facevalue of 1
     for (int i = 1; i < 11; ++i) {
@@ -122,11 +122,20 @@
     
     return self;
 }
-
+//draw from deck, add the card to cardsDrawn array and remove it from cards array. 
 -(id) drawFromDeck {
     int index = rand()%[_cards count];
     Card* cardAtCurrentIndex = [_cards objectAtIndex:index];
+    [_cardsDrawn addObject:cardAtCurrentIndex];
     [_cards removeObjectAtIndex:index];
     return cardAtCurrentIndex;
 }
+//shuffle deck after 5 games...
+-(void) shuffle {
+    for (int i = 0; i < _cardsDrawn.count; ++i) {
+        [_cards addObject:[_cardsDrawn objectAtIndex:i]];
+        [_cardsDrawn removeObjectAtIndex:i];
+    }
+}
+
 @end

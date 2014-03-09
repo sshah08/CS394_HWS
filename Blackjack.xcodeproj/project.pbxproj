@@ -478,6 +478,7 @@
 				EDE201CB18C2A8D900B130CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDE201CC18C2A8D900B130CC /* Build configuration list for PBXNativeTarget "BlackjackTests" */ = {
 			isa = XCConfigurationList;
@@ -486,6 +487,7 @@
 				EDE201CE18C2A8D900B130CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

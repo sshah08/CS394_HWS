@@ -12,26 +12,25 @@
 -(id) init:(Deck*) deck {
     self = [super init];
     if (self) {
-        _cards = [[NSMutableArray alloc]init];
-        [self drawCards: deck];
-        [self drawCards: deck];
+        _cardsDrawn = [[NSMutableArray alloc]init];
     }
     return self;
 }
-
+//draw cards from Deck and add it to cardsDrawn array
 -(void) drawCards:(Deck*) deck {
     Card* c = [deck drawFromDeck];
-    [_cards addObject:c];
+    [_cardsDrawn addObject:c];
 }
 
+//get total for card value and display to screen
 -(int) getTotal {
     int total = 0;
     bool ace = NO;
-    for(Card* temp in _cards) {
-        if ([temp getPoint]==1){
+    for(Card* temp in _cardsDrawn) {
+        if ([temp cardValue]==1){
             ace = YES;
         }
-        total = total + [temp getPoint];
+        total = total + [temp cardValue];
     }
     
     if(total <= 11 & ace == NO) {
@@ -40,20 +39,20 @@
     return total;
 }
 
--(void)displayCards {
-     Card* valuesOfAllCards;
-        for (int i = 0; i < [_cards count]; ++i) {
-            valuesOfAllCards = [_cards objectAtIndex:i];
-            NSLog(@"Value of Card %d, Suit: %@ and Facename: %@", valuesOfAllCards.cardValue, valuesOfAllCards.suit, valuesOfAllCards.faceName);
+//convert Card oBject to strings data so you can use the new line character to display in textField.  return the array.
+-(NSMutableArray*) cardsConcat{
+    NSMutableArray* stringsCardData = [[NSMutableArray alloc]init];
+    for(Card* i in _cardsDrawn){
+        [stringsCardData addObject:([NSString stringWithFormat:@"%@ %@ %d",i.suit, i.faceName, i.cardValue])];
+        
     }
-    
+    return stringsCardData;
 }
--(NSArray*)displayCardsForSimulator {
-//    Card* valuesOfAllCards;
-//    for (int i = 0; i < [_cards count]; ++i) {
-//        valuesOfAllCards = [_cards objectAtIndex:i];
-//        NSLog(@"Value of Card %d, Suit: %@ and Facename: %@", valuesOfAllCards.cardValue, valuesOfAllCards.suit, valuesOfAllCards.faceName);
-//    }
-    return _cards;
+
+
+//reset array cardsDrawn everytime newGame button is pressed
+-(void) resetHands {
+    [_cardsDrawn removeAllObjects];
 }
+
 @end

@@ -14,28 +14,17 @@
 
 int main(int argc, char * argv[])
 {
-    @autoreleasepool {
-        Deck* deck = [[Deck alloc]init];
-        
-        Hand* player = [[Hand alloc]init:deck];
-        
-        //
-        //        int choice, myTotal, dealerTotal;
-        //
-        //        bool stay;
-        
-        [player displayCards];
-        //[dealer displayCards];
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    
+//    Deck* deck = [[Deck alloc]init];
+//    Hand* me = [[Hand alloc]init:deck];
+//    [me drawCards:deck];
+//    [me drawCards:deck];
+//    [me cardsConcat];
+//    [me drawCards:deck];
+//    [me cardsConcat];
+//    
+    
+    
+   @autoreleasepool {return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
